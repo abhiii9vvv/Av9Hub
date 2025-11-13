@@ -23,6 +23,10 @@ async function connectToDatabase() {
   const connection = await mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    ssl: true,
+    tls: true,
+    tlsAllowInvalidCertificates: false,
+    serverSelectionTimeoutMS: 5000,
   });
 
   cachedDb = connection;
