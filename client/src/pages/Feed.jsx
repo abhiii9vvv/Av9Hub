@@ -74,17 +74,16 @@ const Feed = () => {
     <div style={{ 
       maxWidth: '1200px',
       margin: '0 auto',
-      display: 'grid',
-      gridTemplateColumns: '1fr 600px 300px',
-      gap: '1.5rem',
-      padding: '1.5rem',
-      paddingBottom: '2rem'
+      padding: '1.5rem'
     }}>
-      {/* Left Spacer for balance */}
-      <div />
-      
-      {/* Main Feed */}
-      <div className="fade-in">
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'minmax(0, 1fr) 300px',
+        gap: '1.5rem',
+        alignItems: 'start'
+      }}>
+        {/* Main Feed */}
+        <div style={{ maxWidth: '600px', margin: '0 auto', width: '100%' }} className="fade-in">
         <CreatePost onPostCreated={handlePostCreated} />
         
         {posts.length === 0 ? (
@@ -110,10 +109,11 @@ const Feed = () => {
             </div>
           ))
         )}
+        </div>
+        
+        {/* Right Sidebar */}
+        <Sidebar />
       </div>
-      
-      {/* Right Sidebar */}
-      <Sidebar />
     </div>
   );
 };

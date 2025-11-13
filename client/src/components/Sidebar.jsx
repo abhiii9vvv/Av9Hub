@@ -19,8 +19,7 @@ const Sidebar = () => {
       position: 'sticky',
       top: '80px',
       height: 'calc(100vh - 96px)',
-      overflowY: 'auto',
-      padding: '0 1rem'
+      overflowY: 'auto'
     }}>
       {/* Suggestions */}
       <div style={{
