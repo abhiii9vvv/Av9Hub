@@ -159,14 +159,17 @@ const PostCard = ({ post, onUpdate, onDelete }) => {
         <img 
           src={post.image} 
           alt="Post" 
-          className="w-full mb-4" 
+          className="mb-4" 
           style={{ 
+            width: '100%',
+            maxWidth: '100%',
             maxHeight: '500px', 
             objectFit: 'cover',
             borderRadius: '12px',
             border: '1px solid #e5e7eb',
             cursor: 'pointer',
-            transition: 'all 0.2s'
+            transition: 'all 0.2s',
+            display: 'block'
           }}
           onMouseEnter={(e) => e.target.style.transform = 'scale(1.01)'}
           onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
