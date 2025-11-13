@@ -50,18 +50,15 @@ async function connectToDatabase() {
   }
 }
 
-// Middleware to ensure DB connection on each request
+// Middleware to ensure DB connection on each request (non-blocking)
 app.use(async (req, res, next) => {
   try {
     await connectToDatabase();
-    next();
   } catch (error) {
-    console.error('Database connection failed:', error);
-    res.status(503).json({ 
-      message: 'Database connection unavailable', 
-      error: error.message 
-    });
+    console.error('Database connection failed, continuing without DB:', error.message);
+    // Don't block the request, let routes handle offline mode
   }
+  next();
 });
 
 // Routes
