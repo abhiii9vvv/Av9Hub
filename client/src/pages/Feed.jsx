@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import CreatePost from '../components/CreatePost';
 import PostCard from '../components/PostCard';
+import Sidebar from '../components/Sidebar';
 import api from '../utils/api';
 import { toast } from 'react-toastify';
 import { defaultPosts } from '../utils/defaultPosts';
@@ -70,27 +71,49 @@ const Feed = () => {
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4" style={{ paddingBottom: '2rem' }}>
-      <CreatePost onPostCreated={handlePostCreated} />
+    <div style={{ 
+      maxWidth: '1200px',
+      margin: '0 auto',
+      display: 'grid',
+      gridTemplateColumns: '1fr 600px 300px',
+      gap: '1.5rem',
+      padding: '1.5rem',
+      paddingBottom: '2rem'
+    }}>
+      {/* Left Spacer for balance */}
+      <div />
       
-      {posts.length === 0 ? (
-        <div className="bg-white rounded-lg p-6 text-center" style={{
-          border: '2px dashed #e5e7eb',
-          color: '#9ca3af'
-        }}>
-          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📝</div>
-          <p style={{ fontSize: '1.125rem', fontWeight: '500', marginBottom: '0.5rem' }}>No posts yet</p>
-          <p style={{ fontSize: '0.875rem' }}>Be the first to share something!</p>
-        </div>
-      ) : (
-        posts.map((post) => (
-          <PostCard
-            key={post._id}
-            post={post}
-            onDelete={handlePostDeleted}
-          />
-        ))
-      )}
+      {/* Main Feed */}
+      <div className="fade-in">
+        <CreatePost onPostCreated={handlePostCreated} />
+        
+        {posts.length === 0 ? (
+          <div style={{
+            backgroundColor: 'white',
+            borderRadius: '16px',
+            padding: '3rem',
+            textAlign: 'center',
+            border: '2px dashed #e5e7eb',
+            color: '#9ca3af'
+          }}>
+            <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📝</div>
+            <p style={{ fontSize: '1.125rem', fontWeight: '600', marginBottom: '0.5rem', color: '#6b7280' }}>No posts yet</p>
+            <p style={{ fontSize: '0.875rem' }}>Be the first to share something!</p>
+          </div>
+        ) : (
+          posts.map((post, index) => (
+            <div key={post._id} style={{ animationDelay: `${index * 0.05}s` }} className="fade-in">
+              <PostCard
+                post={post}
+                onDelete={handlePostDeleted}
+              />
+            </div>
+          ))
+        )}
+      </div>
+      
+      {/* Right Sidebar */}
+      <Sidebar />
     </div>
   );
 };

@@ -32,10 +32,11 @@ const CreatePost = ({ onPostCreated }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg mb-4" style={{ 
+    <div className="bg-white mb-6" style={{ 
       padding: '1.5rem',
-      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
-      border: '1px solid #e5e7eb'
+      borderRadius: '16px',
+      boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.08)',
+      border: '1px solid #f3f4f6'
     }}>
       <div className="flex gap-3 mb-4">
         <img 
@@ -43,28 +44,41 @@ const CreatePost = ({ onPostCreated }) => {
           alt={user?.username} 
           className="rounded-full" 
           style={{ 
-            width: '3rem', 
-            height: '3rem', 
+            width: '48px', 
+            height: '48px', 
             objectFit: 'cover',
-            border: '2px solid #e5e7eb'
+            border: '2px solid #e5e7eb',
+            flexShrink: 0
           }} 
         />
         <div className="flex-1">
           <textarea
             placeholder="What's on your mind?"
             value={content}
-            onChange={(e) => setContent(e.target.value)}
-            rows="3"
-            style={{ 
-              resize: 'vertical',
-              border: '2px solid #e5e7eb',
-              borderRadius: '0.75rem',
-              padding: '0.75rem 1rem',
-              fontSize: '0.95rem',
-              transition: 'all 0.2s'
+            onChange={(e) => {
+              setContent(e.target.value);
+              e.target.style.height = 'auto';
+              e.target.style.height = e.target.scrollHeight + 'px';
             }}
-            onFocus={(e) => e.target.style.borderColor = '#667eea'}
-            onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
+            rows="1"
+            style={{ 
+              resize: 'none',
+              border: '2px solid #f3f4f6',
+              borderRadius: '12px',
+              padding: '0.875rem 1rem',
+              fontSize: '15px',
+              transition: 'all 0.2s',
+              minHeight: '48px',
+              overflow: 'hidden'
+            }}
+            onFocus={(e) => {
+              e.target.style.borderColor = '#667eea';
+              e.target.style.backgroundColor = '#fafbff';
+            }}
+            onBlur={(e) => {
+              e.target.style.borderColor = '#f3f4f6';
+              e.target.style.backgroundColor = 'white';
+            }}
           />
         </div>
       </div>
@@ -74,20 +88,21 @@ const CreatePost = ({ onPostCreated }) => {
           <img 
             src={image} 
             alt="Preview" 
-            className="w-full rounded-lg" 
+            className="w-full" 
             style={{ 
-              maxHeight: '300px', 
+              maxHeight: '400px', 
               objectFit: 'cover',
-              border: '2px solid #e5e7eb'
+              borderRadius: '12px',
+              border: '1px solid #e5e7eb'
             }} 
           />
           <button
             onClick={() => setImage('')}
             style={{
               position: 'absolute',
-              top: '0.5rem',
-              right: '0.5rem',
-              backgroundColor: 'rgba(0, 0, 0, 0.6)',
+              top: '0.75rem',
+              right: '0.75rem',
+              backgroundColor: 'rgba(0, 0, 0, 0.7)',
               color: 'white',
               padding: '0.5rem',
               borderRadius: '50%',
@@ -95,8 +110,15 @@ const CreatePost = ({ onPostCreated }) => {
               height: '2rem',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center'
+              justifyContent: 'center',
+              fontSize: '1.25rem',
+              fontWeight: 'bold',
+              cursor: 'pointer',
+              border: 'none',
+              transition: 'all 0.2s'
             }}
+            onMouseEnter={(e) => e.target.style.backgroundColor = 'rgba(239, 68, 68, 0.9)'}
+            onMouseLeave={(e) => e.target.style.backgroundColor = 'rgba(0, 0, 0, 0.7)'}
           >
             ×
           </button>
@@ -115,17 +137,25 @@ const CreatePost = ({ onPostCreated }) => {
               const url = prompt('Enter image URL:');
               if (url) setImage(url);
             }}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg transition" 
+            className="flex items-center gap-2 px-4 py-2.5 rounded-lg transition" 
             style={{ 
-              backgroundColor: 'transparent',
+              backgroundColor: '#f9fafb',
               color: '#667eea',
-              border: '1px solid #e5e7eb'
+              border: '1px solid #e5e7eb',
+              fontWeight: '600',
+              fontSize: '0.9rem'
             }}
-            onMouseEnter={(e) => e.target.style.backgroundColor = '#f9fafb'}
-            onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = '#f3f4f6';
+              e.target.style.transform = 'scale(1.02)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = '#f9fafb';
+              e.target.style.transform = 'scale(1)';
+            }}
           >
-            <FaImage />
-            <span className="text-sm">Photo</span>
+            <FaImage size={18} />
+            <span>Photo</span>
           </button>
         </div>
         
@@ -135,16 +165,17 @@ const CreatePost = ({ onPostCreated }) => {
           style={{ 
             background: loading || !content.trim() ? '#d1d5db' : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
             color: 'white',
-            padding: '0.625rem 1.5rem',
-            borderRadius: '0.5rem',
-            fontWeight: '600',
-            fontSize: '0.875rem',
+            padding: '0.75rem 2rem',
+            borderRadius: '12px',
+            fontWeight: '700',
+            fontSize: '0.95rem',
             cursor: loading || !content.trim() ? 'not-allowed' : 'pointer',
             transition: 'all 0.2s',
-            boxShadow: loading || !content.trim() ? 'none' : '0 2px 4px rgba(102, 126, 234, 0.3)'
+            boxShadow: loading || !content.trim() ? 'none' : '0 4px 12px rgba(102, 126, 234, 0.3)',
+            border: 'none'
           }}
-          onMouseEnter={(e) => !loading && content.trim() && (e.target.style.transform = 'translateY(-1px)')}
-          onMouseLeave={(e) => e.target.style.transform = 'translateY(0)'}
+          onMouseEnter={(e) => !loading && content.trim() && (e.target.style.transform = 'translateY(-2px)', e.target.style.boxShadow = '0 6px 16px rgba(102, 126, 234, 0.4)')}
+          onMouseLeave={(e) => (e.target.style.transform = 'translateY(0)', e.target.style.boxShadow = loading || !content.trim() ? 'none' : '0 4px 12px rgba(102, 126, 234, 0.3)')}
         >
           {loading ? 'Posting...' : 'Post'}
         </button>
