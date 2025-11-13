@@ -4,6 +4,10 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { body, validationResult } = require('express-validator');
 const User = require('../models/User');
+const mongoose = require('mongoose');
+
+// Helper to check MongoDB connection
+const isDbConnected = () => mongoose.connection.readyState === 1;
 
 // Helper function to generate avatar using DiceBear with neutral style
 const generateAvatar = (name, username) => {
@@ -20,6 +24,14 @@ router.post('/register', [
   body('fullName').trim().notEmpty().withMessage('Full name is required')
 ], async (req, res) => {
   try {
+    // Check MongoDB connection
+    if (!isDbConnected()) {
+      return res.status(503).json({ 
+        message: 'Database connection unavailable. Please try again later.',
+        maintenance: true 
+      });
+    }
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -69,8 +81,14 @@ router.post('/register', [
       }
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    console.error('Register error:', error);
+    if (error.name === 'MongooseError' || error.name === 'MongoNetworkError') {
+      return res.status(503).json({ 
+        message: 'Database connection error. Please try again later.',
+        maintenance: true 
+      });
+    }
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
 
@@ -80,6 +98,14 @@ router.post('/login', [
   body('password').notEmpty().withMessage('Password is required')
 ], async (req, res) => {
   try {
+    // Check MongoDB connection
+    if (!isDbConnected()) {
+      return res.status(503).json({ 
+        message: 'Database connection unavailable. Please try again later.',
+        maintenance: true 
+      });
+    }
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -118,8 +144,14 @@ router.post('/login', [
       }
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    console.error('Login error:', error);
+    if (error.name === 'MongooseError' || error.name === 'MongoNetworkError') {
+      return res.status(503).json({ 
+        message: 'Database connection error. Please try again later.',
+        maintenance: true 
+      });
+    }
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
 

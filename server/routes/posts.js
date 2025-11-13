@@ -4,8 +4,23 @@ const Post = require('../models/Post');
 const Comment = require('../models/Comment');
 const auth = require('../middleware/auth');
 
-// Get all posts (feed)
-router.get('/', auth, async (req, res) => {
+// Optional auth middleware - allows both authenticated and guest users
+const optionalAuth = (req, res, next) => {
+  const token = req.header('Authorization')?.replace('Bearer ', '');
+  if (token) {
+    try {
+      const jwt = require('jsonwebtoken');
+      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key-change-in-production');
+      req.userId = decoded.userId;
+    } catch (error) {
+      // Invalid token, continue as guest
+    }
+  }
+  next();
+};
+
+// Get all posts (feed) - Now accessible to guests
+router.get('/', optionalAuth, async (req, res) => {
   try {
     const posts = await Post.find()
       .populate('user', 'username fullName avatar')
