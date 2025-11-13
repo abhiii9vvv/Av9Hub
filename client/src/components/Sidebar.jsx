@@ -17,8 +17,8 @@ const Sidebar = () => {
   return (
     <div style={{ 
       position: 'sticky',
-      top: '250px',
-      height: 'calc(100vh - 266px)',
+      top: '88px',
+      height: 'calc(100vh - 104px)',
       overflowY: 'auto'
     }}>
       {/* Suggestions */}

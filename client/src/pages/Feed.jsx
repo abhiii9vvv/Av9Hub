@@ -77,18 +77,20 @@ const Feed = () => {
       paddingBottom: '3rem'
     }}>
       <div style={{ 
-        maxWidth: '1200px',
+        maxWidth: '1400px',
         margin: '0 auto',
         padding: '1.5rem'
       }}>
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'minmax(0, 1fr) 300px',
+        gridTemplateColumns: '1fr 600px 320px 1fr',
         gap: '1.5rem',
         alignItems: 'start'
       }}>
+        {/* Left Spacer */}
+        <div />
         {/* Main Feed */}
-        <div style={{ maxWidth: '600px', margin: '0 auto', width: '100%' }} className="fade-in">
+        <div className="fade-in">
         <CreatePost onPostCreated={handlePostCreated} />
         
         {posts.map((post, index) => (
@@ -103,6 +105,9 @@ const Feed = () => {
         
         {/* Right Sidebar */}
         <Sidebar />
+        
+        {/* Right Spacer */}
+        <div />
       </div>
       </div>
     </div>
