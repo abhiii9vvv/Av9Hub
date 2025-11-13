@@ -62,14 +62,9 @@ cd ..
 
 Create a `.env` file in the root directory:
 ```env
-MONGODB_URI=mongodb://localhost:27017/social-media
+MONGODB_URI=your-mongodb-connection-string
 JWT_SECRET=your-super-secret-jwt-key-change-this
 PORT=5000
-```
-
-For MongoDB Atlas, use:
-```env
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/social-media?retryWrites=true&w=majority
 ```
 
 4. **Run the Application**
@@ -136,8 +131,8 @@ vercel
 ### Step 3: Configure Environment Variables in Vercel
 
 In your Vercel project settings, add:
-- `MONGODB_URI` = `mongodb+srv://...`
-- `JWT_SECRET` = `your-secret-key`
+- `MONGODB_URI` = Your MongoDB Atlas connection string
+- `JWT_SECRET` = Your secret key
 
 ## 📁 Project Structure
 

@@ -39,18 +39,18 @@ export const generateAvatar = (name, size = 100) => {
   `)}`;
 };
 
-// Predefined avatars for famous personalities
+// Predefined avatars for famous personalities with proper gender styling
 export const celebrityAvatars = {
-  'Virat Kohli': 'https://api.dicebear.com/7.x/avataaars/svg?seed=ViratKohli&backgroundColor=1e40af',
-  'Shah Rukh Khan': 'https://api.dicebear.com/7.x/avataaars/svg?seed=ShahRukhKhan&backgroundColor=dc2626',
-  'Rohit Sharma': 'https://api.dicebear.com/7.x/avataaars/svg?seed=RohitSharma&backgroundColor=0891b2',
-  'MS Dhoni': 'https://api.dicebear.com/7.x/avataaars/svg?seed=MSDhoni&backgroundColor=eab308',
-  'Ranveer Singh': 'https://api.dicebear.com/7.x/avataaars/svg?seed=RanveerSingh&backgroundColor=c026d3',
-  'Deepika Padukone': 'https://api.dicebear.com/7.x/avataaars/svg?seed=DeepikaPadukone&backgroundColor=ec4899',
-  'Alia Bhatt': 'https://api.dicebear.com/7.x/avataaars/svg?seed=AliaBhatt&backgroundColor=f97316',
-  'Amitabh Bachchan': 'https://api.dicebear.com/7.x/avataaars/svg?seed=AmitabhBachchan&backgroundColor=475569',
-  'Priyanka Chopra': 'https://api.dicebear.com/7.x/avataaars/svg?seed=PriyankaChopra&backgroundColor=a855f7',
-  'Sachin Tendulkar': 'https://api.dicebear.com/7.x/avataaars/svg?seed=SachinTendulkar&backgroundColor=059669',
+  'Virat Kohli': 'https://api.dicebear.com/7.x/avataaars/svg?seed=ViratKohli&backgroundColor=1e40af&gender=male',
+  'Shah Rukh Khan': 'https://api.dicebear.com/7.x/avataaars/svg?seed=ShahRukhKhan&backgroundColor=dc2626&gender=male',
+  'Rohit Sharma': 'https://api.dicebear.com/7.x/avataaars/svg?seed=RohitSharma&backgroundColor=0891b2&gender=male',
+  'MS Dhoni': 'https://api.dicebear.com/7.x/avataaars/svg?seed=MSDhoni&backgroundColor=eab308&gender=male',
+  'Ranveer Singh': 'https://api.dicebear.com/7.x/avataaars/svg?seed=RanveerSingh&backgroundColor=c026d3&gender=male',
+  'Deepika Padukone': 'https://api.dicebear.com/7.x/avataaars/svg?seed=DeepikaPadukone&backgroundColor=ec4899&gender=female',
+  'Alia Bhatt': 'https://api.dicebear.com/7.x/avataaars/svg?seed=AliaBhatt&backgroundColor=f97316&gender=female',
+  'Amitabh Bachchan': 'https://api.dicebear.com/7.x/avataaars/svg?seed=AmitabhBachchan&backgroundColor=475569&gender=male',
+  'Priyanka Chopra': 'https://api.dicebear.com/7.x/avataaars/svg?seed=PriyankaChopra&backgroundColor=a855f7&gender=female',
+  'Sachin Tendulkar': 'https://api.dicebear.com/7.x/avataaars/svg?seed=SachinTendulkar&backgroundColor=059669&gender=male',
 };
 
 export default generateAvatar;
