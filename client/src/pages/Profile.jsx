@@ -69,64 +69,145 @@ const Profile = () => {
   const isOwnProfile = currentUser?.username === username;
 
   return (
-    <div className="max-w-4xl mx-auto px-4">
-      <div className="bg-white rounded-lg shadow mb-4">
-        {profile.coverPhoto && (
-          <img src={profile.coverPhoto} alt="Cover" className="w-full rounded-t-lg" style={{ height: '200px', objectFit: 'cover' }} />
+    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 1rem' }}>
+      <div style={{
+        backgroundColor: 'white',
+        borderRadius: '16px',
+        boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.08)',
+        marginBottom: '1.5rem',
+        overflow: 'hidden'
+      }}>
+        {profile.coverPhoto ? (
+          <img 
+            src={profile.coverPhoto} 
+            alt="Cover" 
+            onError={(e) => {
+              e.target.style.display = 'none';
+            }}
+            style={{ 
+              width: '100%', 
+              height: '250px', 
+              objectFit: 'cover',
+              display: 'block'
+            }} 
+          />
+        ) : (
+          <div style={{
+            width: '100%',
+            height: '250px',
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+          }} />
         )}
         
-        <div className="p-6">
-          <div className="flex items-start gap-4">
+        <div style={{ padding: '1.5rem' }}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1.5rem' }}>
             <img 
               src={profile.avatar || `https://api.dicebear.com/7.x/thumbs/svg?seed=${profile.username}&backgroundColor=b6e3f4`} 
               alt={profile.username} 
-              className="rounded-full" 
               onError={(e) => {
                 e.target.src = `https://api.dicebear.com/7.x/thumbs/svg?seed=${profile.username}&backgroundColor=b6e3f4`;
               }}
-              style={{ width: '6rem', height: '6rem', objectFit: 'cover', marginTop: '-3rem', border: '4px solid white' }} 
+              style={{ 
+                width: '120px', 
+                height: '120px', 
+                objectFit: 'cover', 
+                borderRadius: '50%',
+                marginTop: '-60px', 
+                border: '5px solid white',
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
+              }} 
             />
             
-            <div className="flex-1">
-              <div className="flex justify-between items-start">
+            <div style={{ flex: 1, paddingTop: '0.5rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
                 <div>
-                  <h1 className="font-bold" style={{ fontSize: '1.5rem' }}>{profile.fullName}</h1>
-                  <p className="text-gray-600">@{profile.username}</p>
+                  <h1 style={{ fontSize: '1.75rem', fontWeight: '700', color: '#1f2937', marginBottom: '0.25rem' }}>{profile.fullName}</h1>
+                  <p style={{ color: '#6b7280', fontSize: '1rem' }}>@{profile.username}</p>
                 </div>
                 
                 {isOwnProfile ? (
-                  <Link to="/edit-profile" className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition" style={{ textDecoration: 'none', color: '#374151' }}>
+                  <Link 
+                    to="/edit-profile" 
+                    style={{ 
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      padding: '0.625rem 1.25rem',
+                      border: '2px solid #e5e7eb',
+                      borderRadius: '12px',
+                      textDecoration: 'none',
+                      color: '#374151',
+                      fontWeight: '600',
+                      fontSize: '0.95rem',
+                      backgroundColor: 'white',
+                      transition: 'all 0.2s',
+                      cursor: 'pointer'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = '#f9fafb';
+                      e.currentTarget.style.borderColor = '#667eea';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = 'white';
+                      e.currentTarget.style.borderColor = '#e5e7eb';
+                    }}
+                  >
                     <FaEdit />
                     Edit Profile
                   </Link>
                 ) : (
                   <button
                     onClick={handleFollow}
-                    className={`px-4 py-2 rounded-lg transition ${
-                      isFollowing
-                        ? 'bg-gray-500 text-white hover:bg-gray-600'
-                        : 'bg-blue-500 text-white hover:bg-blue-600'
-                    }`}
+                    style={{
+                      padding: '0.625rem 1.5rem',
+                      borderRadius: '12px',
+                      border: 'none',
+                      fontWeight: '600',
+                      fontSize: '0.95rem',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s',
+                      background: isFollowing ? '#6b7280' : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                      color: 'white'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-1px)';
+                      e.currentTarget.style.boxShadow = '0 4px 12px rgba(102, 126, 234, 0.4)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
                   >
                     {isFollowing ? 'Unfollow' : 'Follow'}
                   </button>
                 )}
               </div>
 
-              <p className="mt-4">{profile.bio || 'No bio yet'}</p>
+              <p style={{ 
+                marginTop: '1rem',
+                fontSize: '0.95rem',
+                lineHeight: '1.6',
+                color: '#374151'
+              }}>{profile.bio || 'No bio yet'}</p>
 
-              <div className="flex gap-4 mt-4">
-                <div className="text-center">
-                  <div className="font-bold">{posts.length}</div>
-                  <div className="text-sm text-gray-600">Posts</div>
+              <div style={{ 
+                display: 'flex', 
+                gap: '2rem', 
+                marginTop: '1.5rem',
+                paddingTop: '1rem',
+                borderTop: '1px solid #f3f4f6'
+              }}>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '1.25rem', fontWeight: '700', color: '#1f2937' }}>{posts.length}</div>
+                  <div style={{ fontSize: '0.875rem', color: '#6b7280', marginTop: '0.25rem' }}>Posts</div>
                 </div>
-                <div className="text-center">
-                  <div className="font-bold">{profile.followers?.length || 0}</div>
-                  <div className="text-sm text-gray-600">Followers</div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '1.25rem', fontWeight: '700', color: '#1f2937' }}>{profile.followers?.length || 0}</div>
+                  <div style={{ fontSize: '0.875rem', color: '#6b7280', marginTop: '0.25rem' }}>Followers</div>
                 </div>
-                <div className="text-center">
-                  <div className="font-bold">{profile.following?.length || 0}</div>
-                  <div className="text-sm text-gray-600">Following</div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '1.25rem', fontWeight: '700', color: '#1f2937' }}>{profile.following?.length || 0}</div>
+                  <div style={{ fontSize: '0.875rem', color: '#6b7280', marginTop: '0.25rem' }}>Following</div>
                 </div>
               </div>
             </div>
@@ -135,9 +216,21 @@ const Profile = () => {
       </div>
 
       <div>
-        <h2 className="font-bold mb-4" style={{ fontSize: '1.25rem' }}>Posts</h2>
+        <h2 style={{ 
+          fontSize: '1.25rem',
+          fontWeight: '700',
+          marginBottom: '1rem',
+          color: '#1f2937'
+        }}>Posts</h2>
         {posts.length === 0 ? (
-          <div className="bg-white rounded-lg shadow p-6 text-center text-gray-600">
+          <div style={{
+            backgroundColor: 'white',
+            borderRadius: '16px',
+            boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.08)',
+            padding: '3rem',
+            textAlign: 'center',
+            color: '#6b7280'
+          }}>
             <p>No posts yet</p>
           </div>
         ) : (

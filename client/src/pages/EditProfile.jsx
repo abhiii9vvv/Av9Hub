@@ -47,67 +47,187 @@ const EditProfile = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto px-4">
-      <div className="bg-white rounded-lg shadow p-6">
-        <h2 className="font-bold mb-4" style={{ fontSize: '1.5rem' }}>Edit Profile</h2>
+    <div style={{ maxWidth: '700px', margin: '0 auto', padding: '0 1rem' }}>
+      <div style={{
+        backgroundColor: 'white',
+        borderRadius: '16px',
+        boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.08)',
+        padding: '2rem'
+      }}>
+        <h2 style={{ 
+          fontSize: '1.75rem',
+          fontWeight: '700',
+          marginBottom: '2rem',
+          color: '#1f2937'
+        }}>Edit Profile</h2>
         
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="text-gray-700 mb-2" style={{ display: 'block' }}>Full Name</label>
+          <div style={{ marginBottom: '1.5rem' }}>
+            <label style={{ 
+              display: 'block',
+              color: '#374151',
+              fontSize: '0.95rem',
+              fontWeight: '600',
+              marginBottom: '0.5rem'
+            }}>Full Name</label>
             <input
               type="text"
               name="fullName"
               value={formData.fullName}
               onChange={handleChange}
               required
+              style={{
+                width: '100%',
+                padding: '0.75rem 1rem',
+                border: '2px solid #e5e7eb',
+                borderRadius: '12px',
+                fontSize: '1rem',
+                transition: 'all 0.2s',
+                boxSizing: 'border-box'
+              }}
+              onFocus={(e) => e.target.style.borderColor = '#667eea'}
+              onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
             />
           </div>
 
-          <div className="mb-4">
-            <label className="text-gray-700 mb-2" style={{ display: 'block' }}>Bio</label>
+          <div style={{ marginBottom: '1.5rem' }}>
+            <label style={{ 
+              display: 'block',
+              color: '#374151',
+              fontSize: '0.95rem',
+              fontWeight: '600',
+              marginBottom: '0.5rem'
+            }}>Bio</label>
             <textarea
               name="bio"
               value={formData.bio}
               onChange={handleChange}
               rows="4"
               placeholder="Tell us about yourself"
-              style={{ resize: 'vertical' }}
+              style={{
+                width: '100%',
+                padding: '0.75rem 1rem',
+                border: '2px solid #e5e7eb',
+                borderRadius: '12px',
+                fontSize: '1rem',
+                transition: 'all 0.2s',
+                resize: 'vertical',
+                fontFamily: 'inherit',
+                boxSizing: 'border-box'
+              }}
+              onFocus={(e) => e.target.style.borderColor = '#667eea'}
+              onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
             />
           </div>
 
-          <div className="mb-4">
-            <label className="text-gray-700 mb-2" style={{ display: 'block' }}>Avatar URL</label>
+          <div style={{ marginBottom: '1.5rem' }}>
+            <label style={{ 
+              display: 'block',
+              color: '#374151',
+              fontSize: '0.95rem',
+              fontWeight: '600',
+              marginBottom: '0.5rem'
+            }}>Avatar URL</label>
             <input
               type="text"
               name="avatar"
               value={formData.avatar}
               onChange={handleChange}
-              placeholder="https://example.com/avatar.jpg"
+              placeholder="https://i.ibb.co/xxxxxxx/avatar.jpg"
+              style={{
+                width: '100%',
+                padding: '0.75rem 1rem',
+                border: '2px solid #e5e7eb',
+                borderRadius: '12px',
+                fontSize: '1rem',
+                transition: 'all 0.2s',
+                boxSizing: 'border-box'
+              }}
+              onFocus={(e) => e.target.style.borderColor = '#667eea'}
+              onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
             />
             {formData.avatar && (
-              <img src={formData.avatar} alt="Avatar preview" className="mt-2 rounded-full" style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
+              <img 
+                src={formData.avatar} 
+                alt="Avatar preview" 
+                onError={(e) => {
+                  e.target.src = `https://api.dicebear.com/7.x/thumbs/svg?seed=${user?.username}&backgroundColor=b6e3f4`;
+                }}
+                style={{ 
+                  marginTop: '1rem',
+                  width: '120px',
+                  height: '120px',
+                  objectFit: 'cover',
+                  borderRadius: '50%',
+                  border: '3px solid #e5e7eb'
+                }} 
+              />
             )}
           </div>
 
-          <div className="mb-4">
-            <label className="text-gray-700 mb-2" style={{ display: 'block' }}>Cover Photo URL</label>
+          <div style={{ marginBottom: '2rem' }}>
+            <label style={{ 
+              display: 'block',
+              color: '#374151',
+              fontSize: '0.95rem',
+              fontWeight: '600',
+              marginBottom: '0.5rem'
+            }}>Cover Photo URL</label>
             <input
               type="text"
               name="coverPhoto"
               value={formData.coverPhoto}
               onChange={handleChange}
-              placeholder="https://example.com/cover.jpg"
+              placeholder="https://i.ibb.co/xxxxxxx/cover.jpg"
+              style={{
+                width: '100%',
+                padding: '0.75rem 1rem',
+                border: '2px solid #e5e7eb',
+                borderRadius: '12px',
+                fontSize: '1rem',
+                transition: 'all 0.2s',
+                boxSizing: 'border-box'
+              }}
+              onFocus={(e) => e.target.style.borderColor = '#667eea'}
+              onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
             />
             {formData.coverPhoto && (
-              <img src={formData.coverPhoto} alt="Cover preview" className="mt-2 rounded-lg w-full" style={{ maxHeight: '200px', objectFit: 'cover' }} />
+              <img 
+                src={formData.coverPhoto} 
+                alt="Cover preview" 
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                }}
+                style={{ 
+                  marginTop: '1rem',
+                  width: '100%',
+                  maxHeight: '250px',
+                  objectFit: 'cover',
+                  borderRadius: '12px',
+                  border: '2px solid #e5e7eb'
+                }} 
+              />
             )}
           </div>
 
-          <div className="flex gap-2">
+          <div style={{ display: 'flex', gap: '1rem' }}>
             <button
               type="submit"
               disabled={loading}
-              className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition"
+              style={{
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                color: 'white',
+                padding: '0.75rem 2rem',
+                borderRadius: '12px',
+                fontSize: '1rem',
+                fontWeight: '600',
+                border: 'none',
+                cursor: loading ? 'not-allowed' : 'pointer',
+                transition: 'all 0.2s',
+                opacity: loading ? 0.7 : 1
+              }}
+              onMouseEnter={(e) => !loading && (e.target.style.transform = 'translateY(-2px)')}
+              onMouseLeave={(e) => !loading && (e.target.style.transform = 'translateY(0)')}
             >
               {loading ? 'Saving...' : 'Save Changes'}
             </button>
@@ -115,7 +235,23 @@ const EditProfile = () => {
             <button
               type="button"
               onClick={() => navigate(`/profile/${user.username}`)}
-              className="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition"
+              style={{
+                backgroundColor: '#6b7280',
+                color: 'white',
+                padding: '0.75rem 2rem',
+                borderRadius: '12px',
+                fontSize: '1rem',
+                fontWeight: '600',
+                border: 'none',
+                cursor: 'pointer',
+                transition: 'all 0.2s'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.backgroundColor = '#4b5563';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.backgroundColor = '#6b7280';
+              }}
             >
               Cancel
             </button>
