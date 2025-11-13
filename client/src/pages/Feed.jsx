@@ -72,10 +72,15 @@ const Feed = () => {
 
   return (
     <div style={{ 
-      maxWidth: '1200px',
-      margin: '0 auto',
-      padding: '1.5rem'
+      backgroundColor: '#f9fafb',
+      minHeight: '100vh',
+      paddingBottom: '3rem'
     }}>
+      <div style={{ 
+        maxWidth: '1200px',
+        margin: '0 auto',
+        padding: '1.5rem'
+      }}>
       <div style={{
         display: 'grid',
         gridTemplateColumns: 'minmax(0, 1fr) 300px',
@@ -98,6 +103,7 @@ const Feed = () => {
         
         {/* Right Sidebar */}
         <Sidebar />
+      </div>
       </div>
     </div>
   );

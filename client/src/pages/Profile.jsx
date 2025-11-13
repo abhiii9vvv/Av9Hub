@@ -69,7 +69,13 @@ const Profile = () => {
   const isOwnProfile = currentUser?.username === username;
 
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 1rem' }}>
+    <div style={{ 
+      backgroundColor: '#f9fafb',
+      minHeight: '100vh',
+      paddingTop: '1.5rem',
+      paddingBottom: '3rem'
+    }}>
+      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 1rem' }}>
       <div style={{
         backgroundColor: 'white',
         borderRadius: '16px',
@@ -242,6 +248,7 @@ const Profile = () => {
             />
           ))
         )}
+      </div>
       </div>
     </div>
   );
