@@ -7,8 +7,13 @@ dotenv.config();
 
 const app = express();
 
-// Middleware
-app.use(cors());
+// Middleware - Enhanced CORS for production
+app.use(cors({
+  origin: '*',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -16,26 +21,48 @@ app.use(express.urlencoded({ extended: true }));
 let cachedDb = null;
 
 async function connectToDatabase() {
-  if (cachedDb) {
+  if (cachedDb && mongoose.connection.readyState === 1) {
     return cachedDb;
   }
 
-  const connection = await mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    ssl: true,
-    tls: true,
-    tlsAllowInvalidCertificates: false,
-    serverSelectionTimeoutMS: 5000,
-  });
+  try {
+    if (!process.env.MONGODB_URI) {
+      throw new Error('MONGODB_URI is not defined');
+    }
 
-  cachedDb = connection;
-  console.log('✅ MongoDB Connected');
-  return connection;
+    const connection = await mongoose.connect(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      ssl: true,
+      tls: true,
+      tlsAllowInvalidCertificates: false,
+      serverSelectionTimeoutMS: 10000,
+      socketTimeoutMS: 45000,
+    });
+
+    cachedDb = connection;
+    console.log('✅ MongoDB Connected');
+    return connection;
+  } catch (error) {
+    console.error('❌ MongoDB connection error:', error.message);
+    cachedDb = null;
+    throw error;
+  }
 }
 
-// Initialize DB connection
-connectToDatabase().catch(err => console.error('❌ MongoDB connection error:', err));
+// Middleware to ensure DB connection on each request
+app.use(async (req, res, next) => {
+  try {
+    await connectToDatabase();
+    next();
+  } catch (error) {
+    console.error('Database connection failed:', error);
+    res.status(503).json({ 
+      message: 'Database connection unavailable', 
+      error: error.message 
+    });
+  }
+});
 
 // Routes
 app.use('/api/auth', require('../server/routes/auth'));
@@ -47,7 +74,16 @@ app.use('/api/follows', require('../server/routes/follows'));
 
 // Health check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', message: 'Server is running' });
+  res.json({ 
+    status: 'OK', 
+    message: 'Server is running',
+    timestamp: new Date().toISOString(),
+    dbStatus: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
+  });
+});
+
+app.get('/api', (req, res) => {
+  res.json({ message: 'Av9Hub API is running' });
 });
 
 // Error handling middleware
