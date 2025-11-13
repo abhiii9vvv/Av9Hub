@@ -32,39 +32,99 @@ const CreatePost = ({ onPostCreated }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow mb-4 p-4">
-      <div className="flex gap-2 mb-4">
-        <img src={user?.avatar} alt={user?.username} className="h-12 rounded-full" style={{ width: '3rem', height: '3rem', objectFit: 'cover' }} />
+    <div className="bg-white rounded-lg mb-4" style={{ 
+      padding: '1.5rem',
+      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+      border: '1px solid #e5e7eb'
+    }}>
+      <div className="flex gap-3 mb-4">
+        <img 
+          src={user?.avatar} 
+          alt={user?.username} 
+          className="rounded-full" 
+          style={{ 
+            width: '3rem', 
+            height: '3rem', 
+            objectFit: 'cover',
+            border: '2px solid #e5e7eb'
+          }} 
+        />
         <div className="flex-1">
           <textarea
             placeholder="What's on your mind?"
             value={content}
             onChange={(e) => setContent(e.target.value)}
             rows="3"
-            style={{ resize: 'vertical' }}
+            style={{ 
+              resize: 'vertical',
+              border: '2px solid #e5e7eb',
+              borderRadius: '0.75rem',
+              padding: '0.75rem 1rem',
+              fontSize: '0.95rem',
+              transition: 'all 0.2s'
+            }}
+            onFocus={(e) => e.target.style.borderColor = '#667eea'}
+            onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
           />
         </div>
       </div>
 
-      <div className="mb-4">
-        <input
-          type="text"
-          placeholder="Image URL (optional)"
-          value={image}
-          onChange={(e) => setImage(e.target.value)}
-        />
-      </div>
-
       {image && (
-        <div className="mb-4">
-          <img src={image} alt="Preview" className="w-full rounded-lg" style={{ maxHeight: '300px', objectFit: 'cover' }} />
+        <div className="mb-4" style={{ position: 'relative' }}>
+          <img 
+            src={image} 
+            alt="Preview" 
+            className="w-full rounded-lg" 
+            style={{ 
+              maxHeight: '300px', 
+              objectFit: 'cover',
+              border: '2px solid #e5e7eb'
+            }} 
+          />
+          <button
+            onClick={() => setImage('')}
+            style={{
+              position: 'absolute',
+              top: '0.5rem',
+              right: '0.5rem',
+              backgroundColor: 'rgba(0, 0, 0, 0.6)',
+              color: 'white',
+              padding: '0.5rem',
+              borderRadius: '50%',
+              width: '2rem',
+              height: '2rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            ×
+          </button>
         </div>
       )}
 
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center" style={{ 
+        borderTop: '1px solid #f3f4f6',
+        paddingTop: '1rem',
+        marginTop: '0.5rem'
+      }}>
         <div className="flex gap-2">
-          <button type="button" className="flex items-center gap-2 px-3 py-2 hover:bg-gray-100 rounded transition" style={{ backgroundColor: 'transparent' }}>
-            <FaImage className="text-blue-500" />
+          <button 
+            type="button" 
+            onClick={() => {
+              const url = prompt('Enter image URL:');
+              if (url) setImage(url);
+            }}
+            className="flex items-center gap-2 px-3 py-2 rounded-lg transition" 
+            style={{ 
+              backgroundColor: 'transparent',
+              color: '#667eea',
+              border: '1px solid #e5e7eb'
+            }}
+            onMouseEnter={(e) => e.target.style.backgroundColor = '#f9fafb'}
+            onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+          >
+            <FaImage />
             <span className="text-sm">Photo</span>
           </button>
         </div>
@@ -72,7 +132,19 @@ const CreatePost = ({ onPostCreated }) => {
         <button
           onClick={handleSubmit}
           disabled={loading || !content.trim()}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+          style={{ 
+            background: loading || !content.trim() ? '#d1d5db' : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            color: 'white',
+            padding: '0.625rem 1.5rem',
+            borderRadius: '0.5rem',
+            fontWeight: '600',
+            fontSize: '0.875rem',
+            cursor: loading || !content.trim() ? 'not-allowed' : 'pointer',
+            transition: 'all 0.2s',
+            boxShadow: loading || !content.trim() ? 'none' : '0 2px 4px rgba(102, 126, 234, 0.3)'
+          }}
+          onMouseEnter={(e) => !loading && content.trim() && (e.target.style.transform = 'translateY(-1px)')}
+          onMouseLeave={(e) => e.target.style.transform = 'translateY(0)'}
         >
           {loading ? 'Posting...' : 'Post'}
         </button>
