@@ -27,9 +27,11 @@ async function connectToDatabase() {
 
   try {
     if (!process.env.MONGODB_URI) {
+      console.error('❌ MONGODB_URI environment variable is not defined');
       throw new Error('MONGODB_URI is not defined');
     }
 
+    console.log('🔄 Attempting MongoDB connection...');
     const connection = await mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -41,10 +43,15 @@ async function connectToDatabase() {
     });
 
     cachedDb = connection;
-    console.log('✅ MongoDB Connected');
+    console.log('✅ MongoDB Connected successfully');
     return connection;
   } catch (error) {
     console.error('❌ MongoDB connection error:', error.message);
+    console.error('Error details:', {
+      name: error.name,
+      code: error.code,
+      hasMongoUri: !!process.env.MONGODB_URI
+    });
     cachedDb = null;
     throw error;
   }
