@@ -1,12 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import CreatePost from '../components/CreatePost';
 import PostCard from '../components/PostCard';
 import Sidebar from '../components/Sidebar';
 import api from '../utils/api';
 import { toast } from 'react-toastify';
 import { defaultPosts } from '../utils/defaultPosts';
+import { AuthContext } from '../context/AuthContext';
 
 const Feed = () => {
+  const { user } = useContext(AuthContext);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -91,7 +93,7 @@ const Feed = () => {
         <div />
         {/* Main Feed */}
         <div className="fade-in">
-        <CreatePost onPostCreated={handlePostCreated} />
+        {user && <CreatePost onPostCreated={handlePostCreated} />}
         
         {posts.map((post, index) => (
           <div key={post._id} style={{ animationDelay: `${index * 0.05}s` }} className="fade-in">

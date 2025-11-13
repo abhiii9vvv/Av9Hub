@@ -21,7 +21,7 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/" element={<PrivateRoute><Feed /></PrivateRoute>} />
+            <Route path="/" element={<Feed />} />
             <Route path="/profile/:username" element={<PrivateRoute><Profile /></PrivateRoute>} />
             <Route path="/edit-profile" element={<PrivateRoute><EditProfile /></PrivateRoute>} />
             <Route path="*" element={<Navigate to="/" />} />

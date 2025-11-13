@@ -10,10 +10,8 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate('/');
   };
-
-  if (!user) return null;
 
   const isActive = (path) => location.pathname === path;
 
@@ -33,17 +31,74 @@ const Navbar = () => {
       }}>
         <div className="flex justify-between items-center" style={{ height: '64px' }}>
           <Link to="/" style={{ 
-            fontSize: '1.5rem', 
-            fontWeight: 'bold', 
+            fontSize: '1.75rem', 
+            fontWeight: '800', 
             background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', 
             WebkitBackgroundClip: 'text', 
-            WebkitTextFillColor: 'transparent', 
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
             textDecoration: 'none',
-            letterSpacing: '-0.5px'
+            letterSpacing: '-1px',
+            fontFamily: 'system-ui, -apple-system, sans-serif'
           }}>
             Av9Hub
           </Link>
           
+          {!user ? (
+            <div className="flex items-center" style={{ gap: '0.75rem' }}>
+              <Link 
+                to="/login" 
+                style={{ 
+                  padding: '0.5rem 1.25rem',
+                  borderRadius: '0.5rem',
+                  textDecoration: 'none',
+                  color: '#667eea',
+                  backgroundColor: 'white',
+                  fontWeight: '600',
+                  fontSize: '0.95rem',
+                  border: '2px solid #667eea',
+                  transition: 'all 0.2s',
+                  display: 'inline-block'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = '#667eea';
+                  e.currentTarget.style.color = 'white';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'white';
+                  e.currentTarget.style.color = '#667eea';
+                }}
+              >
+                Login
+              </Link>
+              <Link 
+                to="/register" 
+                style={{ 
+                  padding: '0.5rem 1.25rem',
+                  borderRadius: '0.5rem',
+                  textDecoration: 'none',
+                  color: 'white',
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  fontWeight: '600',
+                  fontSize: '0.95rem',
+                  border: 'none',
+                  transition: 'all 0.2s',
+                  boxShadow: '0 4px 6px rgba(102, 126, 234, 0.25)',
+                  display: 'inline-block'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-1px)';
+                  e.currentTarget.style.boxShadow = '0 6px 10px rgba(102, 126, 234, 0.35)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 6px rgba(102, 126, 234, 0.25)';
+                }}
+              >
+                Sign Up
+              </Link>
+            </div>
+          ) : (
           <div className="flex items-center" style={{ gap: '0.5rem' }}>
             <Link 
               to="/" 
@@ -168,6 +223,7 @@ const Navbar = () => {
               onClick={() => navigate(`/profile/${user.username}`)}
             />
           </div>
+          )}
         </div>
       </div>
     </nav>
