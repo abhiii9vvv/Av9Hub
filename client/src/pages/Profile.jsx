@@ -77,7 +77,15 @@ const Profile = () => {
         
         <div className="p-6">
           <div className="flex items-start gap-4">
-            <img src={profile.avatar} alt={profile.username} className="rounded-full" style={{ width: '6rem', height: '6rem', objectFit: 'cover', marginTop: '-3rem', border: '4px solid white' }} />
+            <img 
+              src={profile.avatar || `https://api.dicebear.com/7.x/thumbs/svg?seed=${profile.username}&backgroundColor=b6e3f4`} 
+              alt={profile.username} 
+              className="rounded-full" 
+              onError={(e) => {
+                e.target.src = `https://api.dicebear.com/7.x/thumbs/svg?seed=${profile.username}&backgroundColor=b6e3f4`;
+              }}
+              style={{ width: '6rem', height: '6rem', objectFit: 'cover', marginTop: '-3rem', border: '4px solid white' }} 
+            />
             
             <div className="flex-1">
               <div className="flex justify-between items-start">
