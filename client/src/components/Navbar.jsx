@@ -142,8 +142,8 @@ const Navbar = () => {
             </button>
             
             <img 
-              src={user.avatar} 
-              alt={user.username} 
+              src={user?.avatar || `https://api.dicebear.com/7.x/thumbs/svg?seed=${user?.username}&backgroundColor=b6e3f4`} 
+              alt={user?.username} 
               style={{ 
                 width: '40px',
                 height: '40px',
@@ -153,6 +153,9 @@ const Navbar = () => {
                 marginLeft: '0.5rem',
                 cursor: 'pointer',
                 transition: 'all 0.2s'
+              }}
+              onError={(e) => {
+                e.target.src = `https://api.dicebear.com/7.x/thumbs/svg?seed=${user?.username || 'default'}&backgroundColor=b6e3f4`;
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'scale(1.05)';

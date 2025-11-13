@@ -80,9 +80,12 @@ const PostCard = ({ post, onUpdate, onDelete }) => {
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
           <img 
-            src={post.user?.avatar} 
+            src={post.user?.avatar || `https://api.dicebear.com/7.x/thumbs/svg?seed=${post.user?.username}&backgroundColor=b6e3f4`} 
             alt={post.user?.username} 
             className="rounded-full" 
+            onError={(e) => {
+              e.target.src = `https://api.dicebear.com/7.x/thumbs/svg?seed=${post.user?.username || 'user'}&backgroundColor=b6e3f4`;
+            }}
             style={{ 
               width: '48px', 
               height: '48px', 
@@ -240,9 +243,12 @@ const PostCard = ({ post, onUpdate, onDelete }) => {
           <form onSubmit={handleComment} className="mb-4">
             <div className="flex gap-3">
               <img 
-                src={user?.avatar} 
+                src={user?.avatar || `https://api.dicebear.com/7.x/thumbs/svg?seed=${user?.username}&backgroundColor=b6e3f4`} 
                 alt={user?.username} 
                 className="rounded-full" 
+                onError={(e) => {
+                  e.target.src = `https://api.dicebear.com/7.x/thumbs/svg?seed=${user?.username || 'user'}&backgroundColor=b6e3f4`;
+                }}
                 style={{ 
                   width: '40px', 
                   height: '40px', 
@@ -317,9 +323,12 @@ const PostCard = ({ post, onUpdate, onDelete }) => {
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#f9fafb'}
               >
                 <img 
-                  src={c.user?.avatar} 
+                  src={c.user?.avatar || `https://api.dicebear.com/7.x/thumbs/svg?seed=${c.user?.username}&backgroundColor=b6e3f4`} 
                   alt={c.user?.username} 
                   className="rounded-full" 
+                  onError={(e) => {
+                    e.target.src = `https://api.dicebear.com/7.x/thumbs/svg?seed=${c.user?.username || 'user'}&backgroundColor=b6e3f4`;
+                  }}
                   style={{ 
                     width: '40px', 
                     height: '40px', 

@@ -40,9 +40,12 @@ const CreatePost = ({ onPostCreated }) => {
     }}>
       <div className="flex gap-3 mb-4">
         <img 
-          src={user?.avatar} 
+          src={user?.avatar || `https://api.dicebear.com/7.x/thumbs/svg?seed=${user?.username}&backgroundColor=b6e3f4`} 
           alt={user?.username} 
           className="rounded-full" 
+          onError={(e) => {
+            e.target.src = `https://api.dicebear.com/7.x/thumbs/svg?seed=${user?.username || 'default'}&backgroundColor=b6e3f4`;
+          }}
           style={{ 
             width: '48px', 
             height: '48px', 
