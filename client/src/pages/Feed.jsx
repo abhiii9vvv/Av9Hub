@@ -86,29 +86,14 @@ const Feed = () => {
         <div style={{ maxWidth: '600px', margin: '0 auto', width: '100%' }} className="fade-in">
         <CreatePost onPostCreated={handlePostCreated} />
         
-        {posts.length === 0 ? (
-          <div style={{
-            backgroundColor: 'white',
-            borderRadius: '16px',
-            padding: '3rem',
-            textAlign: 'center',
-            border: '2px dashed #e5e7eb',
-            color: '#9ca3af'
-          }}>
-            <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📝</div>
-            <p style={{ fontSize: '1.125rem', fontWeight: '600', marginBottom: '0.5rem', color: '#6b7280' }}>No posts yet</p>
-            <p style={{ fontSize: '0.875rem' }}>Be the first to share something!</p>
+        {posts.map((post, index) => (
+          <div key={post._id} style={{ animationDelay: `${index * 0.05}s` }} className="fade-in">
+            <PostCard
+              post={post}
+              onDelete={handlePostDeleted}
+            />
           </div>
-        ) : (
-          posts.map((post, index) => (
-            <div key={post._id} style={{ animationDelay: `${index * 0.05}s` }} className="fade-in">
-              <PostCard
-                post={post}
-                onDelete={handlePostDeleted}
-              />
-            </div>
-          ))
-        )}
+        ))}
         </div>
         
         {/* Right Sidebar */}
